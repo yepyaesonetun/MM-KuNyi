@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/ivJob"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_launcher_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_below="@id/ivJob"
+        android:background="#f1f1f1" />
+
+
+
+    <org.mmtextview.components.MMTextView
+        android:id="@+id/tvJobTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="14dp"
+        android:layout_toEndOf="@+id/ivJob"
+        android:maxLines="1"
+        android:textColor="@color/textColorPrimary"
+        android:text="Job Title"
+        android:textSize="@dimen/txt_large" />
+
+    <TextView
+        android:id="@+id/tvOfferAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvJobTitle"
+        android:layout_alignBottom="@+id/tvJobTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:text="8,000 MMK" />
+
+    <org.mmtextview.components.MMTextView
+        android:id="@+id/tvWorkingDaysPerWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvJobTitle"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_toEndOf="@id/ivJob"
+        android:textSize="12sp"
+        android:textColor="@color/textColorSecondary"
+        android:text="2 days . per week" />
+
+    <org.mmtextview.components.MMTextView
+        android:id="@+id/tvJobLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvWorkingDaysPerWeek"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_toEndOf="@id/ivJob"
+        android:textSize="12sp"
+        android:textColor="@color/textColorSecondary"
+        android:text="SanChaung" />
+
+    <Button
+        android:id="@+id/btn1TapToApply"
+        android:visibility="gone"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivJob"
+        android:layout_alignParentEnd="true"
+        android:text="1 tap to Apply" />
+</RelativeLayout>
