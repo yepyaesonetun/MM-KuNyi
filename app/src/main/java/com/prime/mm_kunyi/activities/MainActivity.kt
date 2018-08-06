@@ -1,5 +1,6 @@
 package com.prime.mm_kunyi.activities
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -8,7 +9,10 @@ import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
+import com.google.android.gms.appinvite.AppInviteInvitation
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
@@ -37,6 +41,10 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
 
     override fun getlayoutRes(): Int {
         return R.layout.activity_main
+    }
+
+    companion object {
+        private const val RC_APP_INVITATION: Int = 99
     }
 
     private var mainFragmentPagerAdapter: MyFragmentPagerAdapter? = null
@@ -163,6 +171,38 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_app_invitation) {
+            sendInvitation()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun sendInvitation() {
+        val intent = AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_msg))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .build()
+        startActivityForResult(intent, RC_APP_INVITATION)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_APP_INVITATION) {
+            if (resultCode == RESULT_OK) {
+                val ids = AppInviteInvitation.getInvitationIds(resultCode, data!!)
+                Snackbar.make(fab, "Invitations sent to " + ids.size + " friends", Snackbar.LENGTH_SHORT).show()
+            } else {
+                Snackbar.make(fab, "Failed to send invitation.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun setHomeItem() {
         navigation.selectedItemId = navigation_home
     }
@@ -172,7 +212,7 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
     }
 
     override fun newJostPostProcess() {
-        if (mFirebaseUser!=null) {
+        if (mFirebaseUser != null) {
             navigateToJobPost()
         } else {
             // Not signed in, launch the Sign In activity

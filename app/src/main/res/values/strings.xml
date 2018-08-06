@@ -9,4 +9,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_double_press_exit">Please click BACK again to exit</string>
     <string name="title_me">Me</string>
+    <string name="invitation_title">Join Our Community</string>
+    <string name="invitation_msg">Be informed on the news that matter to Myanmar people</string>
+    <string name="invitation_cta">I want to join</string>
 </resources>

@@ -47,6 +47,10 @@ class JobListViewHolder(view: View, private val delegate: JobItemDelegate) : Bas
         itemView.tvJobLocation.text = data.location
         itemView.tvOfferAmount.text = data.offerAmount!!.amount.toString() + " MMK"
         itemView.tvWorkingDaysPerWeek.text = data.jobDuration!!.workingDaysPerWeek.toString() + " days . per week"
+        itemView.tvContactPhoneNumber.text = data.phoneNo
+        itemView.tvTotalWorkingDay.text = data.jobDuration!!.totalWorkingDays.toString() + " Days"
+        itemView.tvJobStartDate.text = data.jobDuration!!.jobStartDate
+        itemView.tvPostedDate.text = data.postedDate
 
 
     }
