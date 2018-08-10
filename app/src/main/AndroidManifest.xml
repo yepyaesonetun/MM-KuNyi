@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".activities.JobDetailActivity" />
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.JobPostActivity"
+        <activity android:name=".activities.NewJobPostActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.ApplyJobActivity"
             android:windowSoftInputMode="stateHidden"/>

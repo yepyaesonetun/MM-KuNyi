@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.prime.mm_kunyi.activities.JobPostActivity">
+    tools:context="com.prime.mm_kunyi.activities.NewJobPostActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -44,8 +44,8 @@
         android:id="@+id/svNewPost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:windowSoftInputMode="stateHidden"
         android:background="@color/colorWhite"
+        android:windowSoftInputMode="stateHidden"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -62,6 +62,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtShortDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -69,7 +70,7 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
-                android:hint="brief of job" />
+                android:hint="brief of newJob" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,6 +80,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtFullDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -86,16 +88,75 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
-                android:hint="description of job" />
+                android:hint="description of newJob" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:text="Offer Amount"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtOfferAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="quantity of pay"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Offer Duration"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtOfferDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="per day"
+                        android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_large"
-                android:text="Offer Amount"
+                android:text="Total Working Days"
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtTotalWorkingDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -103,7 +164,125 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
-                android:hint="quantity of pay" />
+                android:hint="e.g.15 days"
+                android:inputType="number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:text="Working Day per Week"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtWorkingDayPerWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="2 days"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Working Hour per Day"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtWorkingHourPerDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="2 Hours"
+                        android:inputType="number" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:text="Post Date"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtPostDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="post date"
+                        android:inputType="date" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Post Colosed Date"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtPostClosedDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:background="@drawable/tv_shape_border"
+                        android:hint="post close date"
+                        android:inputType="date" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,6 +292,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtRequiredSkill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -130,6 +310,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -137,16 +318,18 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
-                android:hint="+95 xxx00000" />
+                android:hint="+95 xxx00000"
+                android:inputType="phone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_large"
-                android:text="Job Duration"
+                android:text="Email"
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -154,7 +337,8 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
-                android:hint="Time Period" />
+                android:hint="email"
+                android:inputType="textEmailAddress" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,6 +348,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtImportantNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
@@ -172,6 +357,24 @@
                 android:layout_marginTop="@dimen/margin_small"
                 android:background="@drawable/tv_shape_border"
                 android:hint="Optional" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:text="Location"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtJobLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="76dp"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/tv_shape_border"
+                android:hint="Location" />
 
 
         </LinearLayout>
@@ -192,6 +395,7 @@
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_anchor="@id/svNewPost"
         app:layout_anchorGravity="bottom" />
 

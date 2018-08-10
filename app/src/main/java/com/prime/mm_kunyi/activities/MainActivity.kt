@@ -1,6 +1,5 @@
 package com.prime.mm_kunyi.activities
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -20,7 +19,6 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.prime.mm_kunyi.R
 import com.prime.mm_kunyi.R.id.navigation_home
 import com.prime.mm_kunyi.adapters.MyFragmentPagerAdapter
-import com.prime.mm_kunyi.data.models.JobListModel
 import com.prime.mm_kunyi.data.vo.JobListVO
 import com.prime.mm_kunyi.delegates.HomePresenterDelegate
 import com.prime.mm_kunyi.fragments.HomeFragment
@@ -30,10 +28,10 @@ import com.prime.mm_kunyi.mvp.presenters.MainPresenter
 import com.prime.mm_kunyi.mvp.views.MainView
 import com.prime.mm_kunyi.utils.BottomNavigationViewHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.prime.mm_kunyi.data.models.JobListModel
+import kotlinx.android.synthetic.main.item_view_job.*
 
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
@@ -53,6 +51,7 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
 
     private lateinit var mFirebaseUser: FirebaseUser
     private var mGoogleApiClient: GoogleApiClient? = null
+    private var latestJobID: Int? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -92,6 +91,7 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
         mPresenter.getJobsLD().observe(this,
                 Observer<List<JobListVO>> { jobList: List<JobListVO>? ->
                     displayJobList(jobList)
+                    latestJobID = jobList!!.size
                 })
     }
 
@@ -221,9 +221,18 @@ class MainActivity : BaseActivity(), MainView, HomePresenterDelegate, GoogleApiC
     }
 
     override fun navigateToJobPost() {
-        startActivity(JobPostActivity.getNewJobPostActivityIntent(this))
+        startActivity(NewJobPostActivity.getNewJobPostActivityIntent(this, latestJobID!! + 1))
     }
 
+    override fun likeProcess(job: JobListVO, likeSequenceID: Int) {
+        val jobID = job.jobPostId!!.minus(1)
+        JobListModel.getInstance().addLike(jobID.toString(),(likeSequenceID).toString())
+    }
+
+    override fun commentProcess(job: JobListVO,commentId: Int, commentContent:String) {
+        val jobID = job.jobPostId!!.minus(1)
+        JobListModel.getInstance().addComment(jobID.toString(),commentId.toString(), commentContent)
+    }
 
     private fun signInWithGoogle() {
         val intent = Intent(container.context, LogInActivity::class.java)

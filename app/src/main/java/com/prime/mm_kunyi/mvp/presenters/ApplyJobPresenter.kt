@@ -18,4 +18,8 @@ class ApplyJobPresenter: BasePresenter<ApplyJobView>() {
         return JobListModel.getInstance().getJobById(jobID)
     }
 
+    fun onTapApplyJob(job: JobListVO){
+        mView.navigateSendJob(job)
+    }
+
 }

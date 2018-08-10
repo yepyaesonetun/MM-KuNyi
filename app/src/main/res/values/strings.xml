@@ -12,4 +12,9 @@
     <string name="invitation_title">Join Our Community</string>
     <string name="invitation_msg">Be informed on the news that matter to Myanmar people</string>
     <string name="invitation_cta">I want to join</string>
+    <string name="feed_action_comment">Comment</string>
+    <string name="feed_action_send">Send</string>
+    <string name="feed_action_love">Like</string>
+    <string name="format_total_reactions"><![CDATA[<xliff:g id="like_count">%1$d</xliff:g> Likes - <xliff:g id="comment_count">%2$d</xliff:g> Comments people]]></string>
+
 </resources>

@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
 //        rv.addItemDecoration(dividerItemDecoration)
         rv.adapter = mAdapter
 
-
         return view
 
     }
@@ -58,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     fun addDataToAdapter(jobList: List<JobListVO>?) {
-        mAdapter.appendNewData(jobList!!)
+        mAdapter.setNewData((jobList as MutableList<JobListVO>?)!!)
     }
 
 }// Required empty public constructor

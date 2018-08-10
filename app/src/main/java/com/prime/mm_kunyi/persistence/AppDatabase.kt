@@ -11,7 +11,7 @@ import com.prime.mm_kunyi.utils.AppConstants
 /**
  * Created by yepyaesonetun on 8/2/18.
  **/
-@Database(entities = [(JobListVO::class)], version = 1, exportSchema = false)
+@Database(entities = [(JobListVO::class)], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -19,6 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getDatabase(context: Context): AppDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DB_NAME)
+                        .fallbackToDestructiveMigration()
                         .allowMainThreadQueries()
                         .build()
             }

@@ -9,7 +9,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
+import com.prime.mm_kunyi.data.vo.ApplicantVO
+import com.prime.mm_kunyi.data.vo.CommentVO
 import com.prime.mm_kunyi.data.vo.JobListVO
+import com.prime.mm_kunyi.data.vo.LikeVO
 
 /**
  * Created by yepyaesonetun on 8/2/18.
@@ -56,6 +59,30 @@ class JobListModel private constructor(context: Context) : BaseModel(context) {
 
                     for (snapShot in dataSnapshot.children) {
                         val jobItem: JobListVO = snapShot.getValue<JobListVO>(JobListVO::class.java)!!
+                        when {
+                            jobItem.like == null -> jobItem.like = ArrayList()
+                        }
+                        when {
+                            jobItem.comment == null -> jobItem.comment = ArrayList()
+                        }
+                        when {
+                            jobItem.applicant == null -> jobItem.applicant = ArrayList()
+                        }
+                        when {
+                            jobItem.interested == null -> jobItem.interested = ArrayList()
+                        }
+                        when {
+                            jobItem.jobTags == null -> jobItem.jobTags = ArrayList()
+                        }
+                        when {
+                            jobItem.viewed == null -> jobItem.viewed = ArrayList()
+                        }
+                        when {
+                            jobItem.viewed == null -> jobItem.viewed = ArrayList()
+                        }
+                        when {
+                            jobItem.relevant == null -> jobItem.relevant = ArrayList()
+                        }
                         jobsList.add(jobItem)
                     }
                     mJobsLD.value = jobsList
@@ -92,6 +119,7 @@ class JobListModel private constructor(context: Context) : BaseModel(context) {
                         delegate.onSuccessSignIn(signInAccount)
                     }
                 }
+
                 .addOnFailureListener { e ->
                     delegate.onFailureSignIn(e.message!!)
                 }
@@ -102,11 +130,36 @@ class JobListModel private constructor(context: Context) : BaseModel(context) {
         fun onFailureSignIn(msg: String)
     }
 
-    fun isUserSignIn(): Boolean {
-        return mFirebaseUser != null
+    fun addLike(jobId: String, likeId: String) {
+        val like = LikeVO.initLike(mFirebaseUser!!.uid)
+        mDataBaseReference.child(jobId).child("like")
+                .child(likeId).setValue(like)
     }
 
-    fun getUserInfo(): FirebaseUser {
-        return mFirebaseUser!!
+    fun addComment(jobId: String, commentId:String, commentContent: String){
+        mFirebaseAuth=FirebaseAuth.getInstance()
+        mFirebaseUser= mFirebaseAuth!!.currentUser
+        val comment = CommentVO.initComment(mFirebaseUser!!.uid, mFirebaseUser!!.displayName.toString(), mFirebaseUser!!.photoUrl.toString(), commentContent)
+        mDataBaseReference.child(jobId).child("comment")
+                .child(commentId).setValue(comment)
     }
+
+    fun addNewJob(jobId: String, job: JobListVO, delegate: AddNewJobDelegate) {
+        mDataBaseReference.child(jobId).setValue(job)
+        delegate.onSuccessMsg("Successfully Published!")
+    }
+
+    interface AddNewJobDelegate {
+        fun onSuccessMsg(successMsg: String)
+    }
+
+    fun applyJob(jobID: String, applicantId: String, seekerSkills: String) {
+        val applicant: ApplicantVO = ApplicantVO
+                .initApplicant(mFirebaseUser!!.displayName,
+                        mFirebaseUser!!.photoUrl.toString(),
+                        seekerSkills)
+        mDataBaseReference.child(jobID).child("applicant")
+                .child(applicantId).setValue(applicant)
+    }
+
 }

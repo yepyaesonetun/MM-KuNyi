@@ -16,6 +16,7 @@ class MainPresenter : BasePresenter<MainView>(),
         HomeFragmentDelegate,
         ProfileFragmentDelegate {
 
+
     private var mJobsLD: MutableLiveData<List<JobListVO>> = MutableLiveData()
 
     fun getJobsLD(): MutableLiveData<List<JobListVO>> {
@@ -30,6 +31,14 @@ class MainPresenter : BasePresenter<MainView>(),
         mView.navigateToJobDetail(id)
     }
 
+    override fun onTapLike(job: JobListVO, likeSequenceID: Int) {
+        mView.likeProcess(job, likeSequenceID)
+    }
+
+    override fun onTapComment(job: JobListVO,commentSequenceID:Int, commentContent: String) {
+        mView.commentProcess(job, commentSequenceID, commentContent)
+    }
+
     override fun onTapFabNewJobPost() {
         mView.newJostPostProcess()
     }
@@ -37,6 +46,5 @@ class MainPresenter : BasePresenter<MainView>(),
     override fun onTapLogOut() {
         mView.navigateToLogOut()
     }
-
 
 }

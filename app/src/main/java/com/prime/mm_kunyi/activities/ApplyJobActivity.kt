@@ -8,10 +8,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
+import android.widget.Toast
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.prime.mm_kunyi.R
+import com.prime.mm_kunyi.data.models.JobListModel
 import com.prime.mm_kunyi.data.vo.JobListVO
 import com.prime.mm_kunyi.mvp.presenters.ApplyJobPresenter
 import com.prime.mm_kunyi.mvp.views.ApplyJobView
@@ -36,6 +38,8 @@ class ApplyJobActivity : BaseActivity(), ApplyJobView {
 
     private lateinit var mFirebaseUser: FirebaseUser
     private lateinit var mPresenter: ApplyJobPresenter
+    private lateinit var mJob: JobListVO
+    private var mJobID: Int? = null
 
     override fun setUpContents(savedInstanceState: Bundle?) {
         setUpToolbar(true)
@@ -51,7 +55,7 @@ class ApplyJobActivity : BaseActivity(), ApplyJobView {
                 .into(ivJASeekerProfile)
 
         radioGroupCanLowerOfferAmount.setOnCheckedChangeListener { group, checkedId ->
-            var rdBtn: RadioButton = group.findViewById(checkedId)
+            val rdBtn: RadioButton = group.findViewById(checkedId)
             if (checkedId > -1) {
                 canLowerOfferAmount = rdBtn.text == "Yes"
             }
@@ -61,22 +65,29 @@ class ApplyJobActivity : BaseActivity(), ApplyJobView {
                 .get(ApplyJobPresenter::class.java)
         mPresenter.initPresenter(this)
 
+        mJobID = intent.getIntExtra(IE_JOB_ID, 0)
+
         mPresenter.onUiReady(intent.getIntExtra(IE_JOB_ID, 0))
                 .observe(this,
                         Observer<JobListVO> { job: JobListVO? ->
                             bindDataToView(job)
+                            mJob = job!!
                         })
 
+        tvApplyAndSendJob.setOnClickListener { mPresenter.onTapApplyJob(mJob) }
 
     }
 
     private fun bindDataToView(job: JobListVO?) {
-        tvApplyJobTitle.text = job!!.shortDesc
-        tvJApplyobLocation.text = job!!.location
+        tvApplyJobTitle.text = (job ?: throw NullPointerException("Expression 'job' must not be null")).shortDesc
+        tvJApplyobLocation.text = job.location
     }
 
-    override fun navigateSendJob() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun navigateSendJob(job: JobListVO) {
+        val jobID = mJobID!!.minus(1)
+        JobListModel.getInstance().applyJob(jobID.toString(), (job.applicant!!.size + 1).toString(), edtSeekerSkill.text.toString())
+        Toast.makeText(this, "Successfully Apply!", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -85,11 +96,10 @@ class ApplyJobActivity : BaseActivity(), ApplyJobView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item!!.itemId == R.id.action_close) {
+        if (item.itemId == R.id.action_close) {
             finish()
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 }

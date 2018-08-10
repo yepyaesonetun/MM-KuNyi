@@ -9,4 +9,8 @@ class PostNewJobPresenter : BasePresenter<PostNewJobView>() {
     override fun initPresenter(mView: PostNewJobView) {
         super.initPresenter(mView)
     }
+
+    fun onTapPost(){
+        mView.addJobProcess()
+    }
 }
